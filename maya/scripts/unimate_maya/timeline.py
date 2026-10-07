@@ -82,10 +82,11 @@ def prepare(group, clip, placement='continue', blend_frames=6, start=None):
     return start, rot, pos, prev_euler
 
 
-def append_clip(group, clip, placement='continue', blend_frames=6, start=None):
+def append_clip(group, clip, placement='continue', blend_frames=6, start=None, goto=False):
     """Key *clip* on *group*'s proxy from *start* (default: the frame after its
-    last key, else the playback start) as one undo step. Returns
-    ``(first frame, last frame)``."""
+    last key, else the playback start) as one undo step; *goto* also moves
+    the current time to the clip's first frame within that step (a time change
+    of its own would take the first Ctrl+Z). Returns ``(first frame, last frame)``."""
     start, rot, pos, prev_euler = prepare(group, clip, placement, blend_frames, start)
     joints = proxy_joints(group)
     names = clip['joints']
@@ -118,4 +119,6 @@ def append_clip(group, clip, placement='continue', blend_frames=6, start=None):
         history = clips(group)
         history.append(dict(clip.get('meta', {}), start=start, end=end, placement=placement))
         set_clips(group, history)
+        if goto:
+            cmds.currentTime(start)
     return start, end

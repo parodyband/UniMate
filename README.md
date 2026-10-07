@@ -56,6 +56,8 @@ source scripts/env_windows.sh
 
 Scripts that call `blender -b` (e.g. `run_animate_motion.sh`) work as they are; run a module that imports `bpy` through Blender with `bash scripts/bpy_run.sh <module> [args]`, e.g. `bash scripts/bpy_run.sh data_process.rig_preprocess run --input robot.glb --output_dir outputs/rig/robot`.
 
+**Maya.** [`maya/`](maya/README.md) is a Maya 2027 panel: set up any rig, prompt it, and append the generated clips to its timeline (each append one undo step), then drive or bake the rig. The model runs in a local server, `python -m unimate.serve`.
+
 ## 📊 Dataset & Data Processing
 
 We introduce **UniML3D**, a large-scale dataset of 13,769 text-paired motion clips on 7,430 skeletons covering diverse skeletal topologies — bipedal, quadrupedal, avian, marine, insectoid, serpentine, and articulated rigid objects — all brought into a unified canonicalization.
