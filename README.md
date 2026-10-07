@@ -48,6 +48,14 @@ pip install "setuptools<81"
 pip install -r requirements.txt --no-build-isolation
 ```
 
+**Windows.** The pinned `bpy==4.0.0` module cannot be installed on Windows, so [`scripts/setup_windows.sh`](scripts/setup_windows.sh) (Git Bash, needs [uv](https://docs.astral.sh/uv/)) sets up the env without it, plus the Blender 4.0.2 app wired to the env and the released checkpoint. Then, in every shell:
+
+```bash
+source scripts/env_windows.sh
+```
+
+Scripts that call `blender -b` (e.g. `run_animate_motion.sh`) work as they are; run a module that imports `bpy` through Blender with `bash scripts/bpy_run.sh <module> [args]`, e.g. `bash scripts/bpy_run.sh data_process.rig_preprocess run --input robot.glb --output_dir outputs/rig/robot`.
+
 ## 📊 Dataset & Data Processing
 
 We introduce **UniML3D**, a large-scale dataset of 13,769 text-paired motion clips on 7,430 skeletons covering diverse skeletal topologies — bipedal, quadrupedal, avian, marine, insectoid, serpentine, and articulated rigid objects — all brought into a unified canonicalization.

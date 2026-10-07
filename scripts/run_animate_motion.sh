@@ -66,7 +66,8 @@ if [ "$#" -ge 1 ] && { [ -f "$1/manifest.json" ] || [[ "$1" == *.json && -f "$1"
         eval "$(conda shell.bash hook 2>/dev/null)"
         conda activate "${CONDA_ENV:-unimate}" 2>/dev/null || true
     fi
-    JOBS=$(python -m data_process.mesh_animation.sample_manifest "${LIST_ARGS[@]}")
+    # tr: Python on Windows ends lines in CRLF, which would leave a \r on dtype
+    JOBS=$(python -m data_process.mesh_animation.sample_manifest "${LIST_ARGS[@]}" | tr -d '\r')
     mkdir -p "$OUTPUT_DIR"
     TOTAL=$(printf '%s\n' "$JOBS" | grep -c .)
     echo "============================================================"
